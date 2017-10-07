@@ -1,0 +1,13 @@
+package fedora3 data for ingest:
+
+ 1. files.sh - list all files to files.txt
+ 2. pages.sh - makes list of pages from files.txt
+ 3. pageids.sh - extract page ids from masterImage.txt
+ 4. pagefolders.sh - get list of page/folder links from pages in pageids.txt
+ 5. folders.sh - makes list of folders from pagefolders.txt
+ 6. folderboxes.sh - get list of folder/box links from folders in folders.txt
+ 7. boxes.sh - makes a list of boxes from folderboxes.txt
+ 8. pagetech.sh - get techmd properties from pageids.txt
+ 9. collect-boxes.sh - gather and package box metadata
+10. collect-folders.sh - gather and package folder metadata
+11. collect-pages.sh - gather and package page metadata

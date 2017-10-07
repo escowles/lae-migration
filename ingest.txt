@@ -1,0 +1,16 @@
+LAE ingest
+
+1. mount diglibdata1/ifs/pulstore at /opt/fedora/data
+2. unpack box/folder/page metadata tarballs into /opt/fedora/meta
+3. copy pagefolders.txt and masterImage.txt into /opt/fedora/meta
+4. symblink /opt/fedora/meta/datastreamStore to /opt/fedora/data/datastreamStore
+5. deploy lae-ingest branch
+6. load vocabs (vocab.sh)
+7. create a ephemera project named "Latin American Ephemera"
+8. map fields to vocabs:
+	EphemeraFolder.genre =======> LAE Genres
+	EphemeraFolder.geo_origin ==> LAE Areas
+	EphemeraFolder.geo_subject => LAE Areas
+	EphemeraFolder.language ====> LAE Languages
+	EphemeraFolder.subject =====> LAE Subjects
+9. ingest folders (ingest.sh)

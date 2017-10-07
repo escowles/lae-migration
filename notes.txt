@@ -1,0 +1,69 @@
+given foxml:
+
+  <foxml:datastream ID="masterImage" STATE="A" CONTROL_GROUP="M" VERSIONABLE="true">
+    <foxml:datastreamVersion ID="masterImage.0" LABEL="File Datastream" CREATED="2014-07-18T21:08:51.141Z" MIMETYPE="image/tiff" SIZE="15774840">
+      <foxml:contentLocation TYPE="INTERNAL_ID" REF="puls:01h6f+masterImage+masterImage.0"/>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+
+128.112.202.73:/ifs/pulstore/datastreamStore/datastreamStore/59/info%3Afedora%2Fpuls%3A01h6f%2FmasterImage%2FmasterImage.0
+
+how do we know that it's in dir 59? lookup in files.txt, apparently
+	there are 67247 masterImages, so only about a 5mb lookup table
+
+scripts:
+
+pages.sh - makes list of pages
+pageids.sh - ??? probably munging list of pages
+pagefolders.sh - page FOXML isPartOf folder
+folders.sh - makes list of folders
+folderboxes.sh - folder FOXML inBox box
+boxes.sh - makes a list of boxes
+collect-boxes.sh - gather and package box metadata
+collect-folders.sh - gather and package folder metadata
+collect-pages.sh - gather and package page metadata
+files.sh - just listing all files
+pagetech.sh - get techmd properties from pageids.txt
+
+linkage
+    page RELS-EXT: isPartOf <folder>
+    folder RELS-EXT: inBox <box>
+
+loading process:
+	parse pagefolders.txt and masterImage.txt into hashes
+	for each folder (/data/lae/folders/#{id})
+		parse foxml: RELS-EXT inBox, and create box if necessary
+		parse rightsMetadata for visibility
+		parse provMetadata:
+			pulterms:barcode: EF.barcode
+			pulsterms:state
+			pulterms:suppressed
+			pulterms:physicalNumber: EF.folder_number
+		parse descMetadata:
+			dcterms:title: EF.title
+			dcterms:alternative: EF.alternative_title
+			dcterms:description: EF.description
+			dcterms:format: EF.genre
+			dcterms:rights: don't map (hard-code rights, need to add new value for this)
+			dcterms:coverage: EF.geo_subject
+			dcterms:language: EF.language
+			dcterms:publisher: EF.publisher
+			dcterms:subject: EF.subject
+			dcterms:creator: EF.creator
+			dcterms:contributor: EF.contributor
+			dcterms:created: EF.date_created
+
+			marcrel:mfp: EF.geographic_origin
+
+			pulterms:earliestCreated
+			pulterms:latestCreated
+			pulterms:sortTitle: EF.sort_title
+			pulterms:category: don't map (get from subject vocab)
+			pulterms:isPartOfSeries: EF.series
+			pulterms:pageCount: EF.page_count
+			pulterms:heightInCM: EF.height
+			pulterms:widthInCM: EF.width
+
+	files
+		find items in pagefolders hash, and load each by their page number property
+			attach masterImage a a FileSet

@@ -1,3 +1,4 @@
 #!/bin/sh
 
-cat masterImage.txt | cut -d% -f4 | cut -c3- > pageids.txt
+cat pages.txt | cut -d% -f4 | cut -c3- > pageids.txt
+paste pages.txt pageids.txt > masterImage.txt

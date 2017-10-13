@@ -1,1 +1,1 @@
-grep masterImage files.txt > masterImage.txt
+grep masterImage files.txt > pages.txt

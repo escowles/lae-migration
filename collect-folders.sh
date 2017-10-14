@@ -11,7 +11,7 @@ function get
 
   FILES=`grep $ID files.txt | grep $FILTER`
   F=`cd $BASE; ls -t $FILES | head -1`
-  if [ ! -f $UNIT/$ID/$DEST ]; then
+  if [ ! -f $UNIT/$ID/$DEST -o $BASE/$F -nt $UNIT/$ID/$DEST ]; then
     cp -v $BASE/$F $UNIT/$ID/$DEST
   fi
 }
